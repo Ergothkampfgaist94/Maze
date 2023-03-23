@@ -39,7 +39,7 @@
 
         private void FillObstacles()
         {
-            var random = new Random();
+            var random = new Random(4);
             int obstaclesCount = 0;
             do
             {
@@ -62,13 +62,13 @@
             {
                 _maze[0, i] = '*';
             }
-            for (int i = 0; i < N - 1; i++)
+            for (int i = 0; i < N; i++)
             {
                 _maze[1, i] = ' ';
             }
 
             _maze[1, N - 1] = '*';
-            for (int i = 2; i < N - 2; i++)
+            for (int i = 2; i < N - 1; i++)
             {
                 _maze[i, 0] = '*';
                 for (int j = 1; j < N - 1; j++)
@@ -78,6 +78,7 @@
                 _maze[i, N - 1] = '*';
             }
             _maze[N - 2, 0] = '*';
+            _maze[N - 2, N-1] = ' ';
             for (int i = 0; i < N; i++)
             {
                 _maze[N - 1, i] = '*';
@@ -85,7 +86,7 @@
         }
         private void Wanderer()
         {
-            for (int i = 1; i < N - 1; i++)//row
+            for (int i = 1; i < N-1; i++)//row
             {
                 for (int j = 0; j < N; j++)//columns
                 {
@@ -94,7 +95,7 @@
                         i++;
                         j--;
                         if (_maze[i, j] == '*')
-                        {
+                        {                           
                             _maze[i - 1, j - 1] = 'L';
                             j--;
                         }
