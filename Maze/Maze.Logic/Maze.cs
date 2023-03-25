@@ -114,9 +114,9 @@
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception(message:"'game over'");
+               throw new Exception("Game Over");
             }
         }
     }

@@ -9,8 +9,7 @@ try
     Console.ForegroundColor = ConsoleColor.White;
     Console.BackgroundColor = ConsoleColor.Black;
 }
-catch (Exception)
+catch (Exception ex)
 {
-
-	throw;
+    Console.WriteLine(ex.Message);
 }
