@@ -39,7 +39,7 @@
 
         private void FillObstacles()
         {
-            var random = new Random(4);
+            var random = new Random(1);
             int obstaclesCount = 0;
             do
             {
@@ -49,7 +49,7 @@
                 {
                     if (_maze[i, j] == ' ')
                     {
-                        _maze[i, j] = '*';
+                        _maze[i, j] = '█';
                         obstaclesCount++;
                     }
                 }
@@ -60,52 +60,63 @@
         {
             for (int i = 0; i < N; i++)
             {
-                _maze[0, i] = '*';
+                _maze[0, i] = '█';
             }
-            for (int i = 0; i < N; i++)
+            for (int i = 0; i < N - 1; i++)
             {
                 _maze[1, i] = ' ';
             }
 
-            _maze[1, N - 1] = '*';
-            for (int i = 2; i < N - 1; i++)
+            _maze[1, N - 1] = '█';
+            for (int i = 2; i < N - 2; i++)
             {
-                _maze[i, 0] = '*';
+                _maze[i, 0] = '█';
                 for (int j = 1; j < N - 1; j++)
                 {
                     _maze[i, j] = ' ';
                 }
-                _maze[i, N - 1] = '*';
+                _maze[i, N - 1] = '█';
             }
-            _maze[N - 2, 0] = '*';
-            _maze[N - 2, N-1] = ' ';
+            _maze[N - 2, 0] = '█';
+            for (int i = 1; i < N; i++)
+            {
+                _maze[N - 2, i] = ' ';
+            }
+
             for (int i = 0; i < N; i++)
             {
-                _maze[N - 1, i] = '*';
+                _maze[N - 1, i] = '█';
             }
         }
         private void Wanderer()
         {
-            for (int i = 1; i < N-1; i++)//row
+            try
             {
-                for (int j = 0; j < N; j++)//columns
+                for (int i = 1; i < N - 1; i++)//row
                 {
-                    if (_maze[i, j] == '*')
+                    for (int j = 0; j < N; j++)//columns
                     {
-                        i++;
-                        j--;
-                        if (_maze[i, j] == '*')
-                        {                           
-                            _maze[i - 1, j - 1] = 'L';
+                        if (_maze[i, j] == '█')
+                        {
+                            i++;
                             j--;
+                            if (_maze[i, j] == '█')
+                            {
+                                _maze[i - 1, j - 1] = 'L';
+                                j--;
+                            }
+                            _maze[i, j] = 'D';
                         }
-                        _maze[i, j] = 'D';
-                    }
-                    else
-                    {
-                        _maze[i, j] = 'R';
+                        else
+                        {
+                            _maze[i, j] = 'R';
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(message:"'game over'");
             }
         }
     }
