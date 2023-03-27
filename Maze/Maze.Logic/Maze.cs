@@ -10,7 +10,6 @@
             Obstacles = obstacles;
             _maze = new char[N, N];
             FillMaze();
-            WanderPath();
         }
 
         public int N { get; }
@@ -35,12 +34,8 @@
         {
             FillBorders();
             FillObstacles();
-        }
-        private void WanderPath() 
-        {
             Wanderer();
         }
-
         private void FillObstacles()
         {
             var random = new Random();
@@ -92,8 +87,8 @@
                 _maze[N - 1, i] = '█';
             }
         }
-        private void Wanderer()
-        {
+        public string Wanderer()
+        { string path = string.Empty;
             try
             {
                 for (int i = 1; i < N - 1; i++)//row
@@ -112,13 +107,15 @@
                             i++;
                         }
                         _maze[i, j] = '▬';
+                        path = path + _maze[i, j];
                     }
                 }
             }
             catch (Exception ex)
             {
-               throw new Exception($"{ToString()})\n Game Over");
+               throw new Exception($"{ToString()}\n Game Over");
             }
+            return path;
         }
     }
 }
