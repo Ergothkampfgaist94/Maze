@@ -10,6 +10,7 @@
             Obstacles = obstacles;
             _maze = new char[N, N];
             FillMaze();
+            WanderPath();
         }
 
         public int N { get; }
@@ -34,12 +35,15 @@
         {
             FillBorders();
             FillObstacles();
+        }
+        private void WanderPath() 
+        {
             Wanderer();
         }
 
         private void FillObstacles()
         {
-            var random = new Random(1);
+            var random = new Random();
             int obstaclesCount = 0;
             do
             {
@@ -98,25 +102,22 @@
                     {
                         if (_maze[i, j] == '█')
                         {
-                            i++;
                             j--;
-                            if (_maze[i, j] == '█')
+                            if (_maze[i+1, j] == '█')
                             {
-                                _maze[i - 1, j - 1] = 'L';
+                                _maze[i, j] = '◄';
                                 j--;
                             }
-                            _maze[i, j] = 'D';
+                            _maze[i, j] = '▼';
+                            i++;
                         }
-                        else
-                        {
-                            _maze[i, j] = 'R';
-                        }
+                        _maze[i, j] = '▬';
                     }
                 }
             }
             catch (Exception ex)
             {
-               throw new Exception("Game Over");
+               throw new Exception($"{ToString()})\n Game Over");
             }
         }
     }
