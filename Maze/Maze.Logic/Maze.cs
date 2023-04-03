@@ -34,7 +34,6 @@
         {
             FillBorders();
             FillObstacles();
-            Wanderer();
         }
         private void FillObstacles()
         {
@@ -100,20 +99,32 @@
                             j--;
                             if (_maze[i+1, j] == '█')
                             {
-                                _maze[i, j] = '◄';
-                                j--;
+                                do
+                                {
+                                    _maze[i, j] = '◄';
+                                    path += _maze[i, j];
+                                    j--;
+
+                                    if (_maze[i, j] == '█')
+                                    {
+                                        return "\nGame Over";
+                                    }
+                                } while (_maze[i, j] == '█' || _maze[i + 1, j] == '█');
                             }
                             _maze[i, j] = '▼';
+                            path += _maze[i, j];
                             i++;
                         }
-                        _maze[i, j] = '▬';
-                        path = path + _maze[i, j];
+                        _maze[i, j] = '►';
+                        path += _maze[i, j];
+                        
                     }
+
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-               throw new Exception($"{ToString()}\n Game Over");
+               throw new Exception($"{ToString()}\nGame Over");
             }
             return path;
         }
